@@ -20,6 +20,12 @@ print(my_grades)
 percentage_grade = GradeCalculator.calculate_course_percentage(my_grades, weights)
 if percentage_grade is None:
     print("Can't calculate overall course grade without all individual grades.")
+    min_avg_points = GradeCalculator.get_min_avg_point_for_A_grade(my_grades, weights)
+    if min_avg_points is None:
+        print("Can't get A in class")
+    else:
+        print("He has to get {} of min_points from all yet ungraded assignments to get A in class".
+              format(min_avg_points))
 else:
     letter_grade = GradeCalculator.calculate_letter_grade(percentage_grade)
     print(f'The letter grade with an overall {percentage_grade*100}% is {letter_grade}')

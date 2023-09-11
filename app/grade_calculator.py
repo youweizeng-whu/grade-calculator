@@ -10,7 +10,29 @@ class GradeCalculator:
     """
     Calculates the overall course grade for ENPM611.
     """
-    
+    @staticmethod
+    def get_min_avg_point_for_A_grade(grades:Grades, weights:GradeWeights) -> float:
+        x = 0
+        while x <= 1:
+            # slow, but do not depend on any magic number
+            optimistic_grades:Grades = copy.copy(grades)
+            if x == round((x + 1)/2,2):
+                return None
+            x = round((x + 1)/2,2)
+            if optimistic_grades.quiz_1 is None:
+                optimistic_grades.quiz_1 = x
+            if optimistic_grades.quiz_2 is None:
+                optimistic_grades.quiz_2 = x
+            if optimistic_grades.midterm is None:
+                optimistic_grades.midterm = x
+            if optimistic_grades.project is None:
+                optimistic_grades.project = x
+            if optimistic_grades.final is None:
+                optimistic_grades.final = x     
+            percent_grade = GradeCalculator.calculate_course_percentage(optimistic_grades, weights)
+            if GradeCalculator.calculate_letter_grade(percent_grade) == 'A':
+                return x
+        return None
     @staticmethod
     def calculate_course_percentage(grades:Grades, weights:GradeWeights) -> float:
         """"
